@@ -1,5 +1,5 @@
 -- Clean and standardize Employee
-CREATE OR REPLACE TABLE cleaned_employee AS
+CREATE OR REPLACE TABLE d5_clean.cleaned_employee AS
 SELECT
     CAST(EmployeeId AS INT) AS EmployeeId,
     TRIM(FirstName) AS FirstName,
@@ -17,5 +17,4 @@ SELECT
     TRIM(Fax) AS Fax,
     TRIM(Email) AS Email
 FROM Employee;
-FROM d5_raw.raw_employee
-WHERE EmployeeId IS NOT NULL;
+FROM d5_raw.raw_employee;
