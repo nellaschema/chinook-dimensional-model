@@ -14,7 +14,7 @@ See `schema_diagram.png` for the current agreed model.
 
 Fact table grain: one row per invoice line.
 
-Dimensions: Customer, Employee, Track, Album, Artist, Genre, Invoice, Date
+Dimensions: Customer, Employee, Track, Date
 
 ## Business Questions
 1. Top Revenue by Genre per Country
