@@ -19,6 +19,9 @@
 --   RANK() is used so that all genres tied for the highest revenue within a country are retained.
 
 -- Highest TOTAL REVENUE per GENRE per COUNTRY - replace table names
+
+CREATE OR REPLACE TABLE workspace.d5_gold.top_genre_by_customer_country AS
+
 SELECT *
 FROM (
     SELECT
