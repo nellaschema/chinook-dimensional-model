@@ -20,7 +20,7 @@
 
 -- Highest TOTAL REVENUE per GENRE per COUNTRY - replace table names
 
-CREATE OR REPLACE TABLE workspace.d5_gold.top_genre_by_customer_country AS
+CREATE OR REPLACE TABLE workspace.d5_analysis.top_genre_by_customer_country AS
 
 SELECT *
 FROM (
