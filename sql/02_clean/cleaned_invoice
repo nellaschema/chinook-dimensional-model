@@ -1,0 +1,12 @@
+CREATE OR REPLACE TABLE d5_clean.cleaned_invoice AS
+SELECT
+    CAST(InvoiceId AS INT) AS InvoiceId,
+    CAST(CustomerId AS INT) AS CustomerId,
+    CAST(InvoiceDate AS TIMESTAMP) AS InvoiceDate,
+    TRIM(BillingAddress) AS BillingAddress,
+    TRIM(BillingCity) AS BillingCity,
+    TRIM(BillingState) AS BillingState,
+    TRIM(BillingCountry) AS BillingCountry,
+    TRIM(BillingPostalCode) AS BillingPostalCode,
+    CAST(Total AS DECIMAL(10,2)) AS Total
+FROM d5_raw.raw_invoice;
