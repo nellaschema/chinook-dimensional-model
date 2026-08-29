@@ -1,11 +1,6 @@
--- Clean and standardize InvoiceLine
-
--- Remove invalid Quantity and non-negative UnitPrice
-CREATE OR REPLACE TABLE d5_clean.cleaned_invoiceline AS
+CREATE OR REPLACE TABLE workspace.d5_clean.cleaned_playlist AS
 SELECT
-    CAST(InvoiceLineId AS INT) AS InvoiceLineID,
-    CAST(InvoiceId AS INT) AS InvoiceId,
-    CAST(TrackId AS INT) AS TrackId,
-    CAST(UnitPrice AS DECIMAL(10,2)) AS UnitPrice,
-    CAST(Quantity AS INT) AS Quantity
-FROM d5_raw.raw_invoiceline;
+    PlaylistId,
+    Name
+FROM workspace.d5_raw.raw_playlist
+
