@@ -1,0 +1,25 @@
+-- ============================================================
+-- VALIDATION: CLEANED ARTIST
+-- Purpose: Validate row count, ArtistId uniqueness, and
+--          completeness of artist names.
+--
+-- Expected Results:
+--   Row_Count = 275
+--   Unique_ArtistId = 275
+--   Null_ArtistId = 0
+--   Invalid_Name = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(ArtistId) Total_ArtistId,
+    COUNT(DISTINCT ArtistId) AS Unique_ArtistId,
+    COUNT_IF(ArtistId IS NULL) AS Null_ArtistId,
+    COUNT_IF(
+        Name IS NULL OR TRIM(Name) = ''
+    ) AS Invalid_Name
+FROM d5_clean.cleaned_artist;
+
+
+
+
