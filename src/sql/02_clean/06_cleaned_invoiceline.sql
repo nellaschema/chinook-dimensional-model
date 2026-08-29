@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE workspace.d5_clean.cleaned_playlist AS
+CREATE OR REPLACE TABLE workspace.d5_clean.clean_playlist AS
 SELECT
     PlaylistId,
     Name
