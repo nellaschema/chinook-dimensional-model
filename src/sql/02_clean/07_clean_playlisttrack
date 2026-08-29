@@ -1,0 +1,9 @@
+CREATE OR REPLACE TABLE workspace.d5_clean.cleaned_playlisttrack AS
+SELECT
+  PlaylistId,
+  TrackId
+FROM workspace.d5_raw.raw_playlisttrack;
+
+
+
+
