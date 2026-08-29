@@ -1,0 +1,19 @@
+-- Clean and standardize Employee
+CREATE OR REPLACE TABLE d5_clean.cleaned_employee AS
+SELECT
+    CAST(EmployeeId AS INT) AS EmployeeId,
+    TRIM(FirstName) AS FirstName,
+    TRIM(LastName) AS LastName,
+    TRIM(Title) AS Title,
+    CAST(ReportsTo AS INT) AS ReportsTo,
+    CAST(BirthDate AS DATE) AS BirthDate,
+    CAST(HireDate AS DATE) AS HireDate,
+    TRIM(Address) AS Address,
+    TRIM(City) AS City,
+    TRIM(State) AS State,
+    TRIM(Country) AS Country,
+    TRIM(PostalCode) AS PostalCode,
+    TRIM(Phone) AS Phone,
+    TRIM(Fax) AS Fax,
+    TRIM(Email) AS Email
+FROM d5_raw.raw_employee;
