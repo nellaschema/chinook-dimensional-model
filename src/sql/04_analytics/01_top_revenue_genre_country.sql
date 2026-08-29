@@ -1,24 +1,4 @@
--- TOP-GROSSING GENRE BY CUSTOMER COUNTRY
--- Purpose:
---   Identify the genre with the highest total revenue within each customer country.
---
--- Logic:
---   1. Join Genre to Track to determine the genre of each track.
---   2. Join Track to InvoiceLine to calculate revenue.
---   3. Join InvoiceLine to Invoice to identify the customer.
---   4. Join Invoice to Customer to obtain the customer's country.
---   5. Aggregate revenue by genre and customer country.
---   6. Rank genres within each country based on total revenue.
---   7. Return the highest-revenue genre(s) per country.
---
--- Note:
---   Customer.Country is used instead of Invoice.BillingCountry because Country is already available in DimCustomer.
---   This avoids duplicating country information in the fact table.
---   Therefore, the result represents revenue by CUSTOMER COUNTRY, not necessarily invoice billing country.
---
---   RANK() is used so that all genres tied for the highest revenue within a country are retained.
-
--- Highest TOTAL REVENUE per GENRE per COUNTRY - replace table names
+-- Highest TOTAL REVENUE per GENRE per COUNTRY
 
 CREATE OR REPLACE TABLE workspace.d5_analysis.top_genre_by_customer_country AS
 
