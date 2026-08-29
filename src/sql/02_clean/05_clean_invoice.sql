@@ -1,14 +1,13 @@
--- Create cleaned_invoice
-
-CREATE OR REPLACE TABLE d5_clean.cleaned_invoice AS
-SELECT
-    CAST(InvoiceId AS INT) AS InvoiceId,
-    CAST(CustomerId AS INT) AS CustomerId,
-    CAST(InvoiceDate AS TIMESTAMP) AS InvoiceDate,
-    TRIM(BillingAddress) AS BillingAddress,
-    TRIM(BillingCity) AS BillingCity,
-    TRIM(BillingState) AS BillingState,
-    TRIM(BillingCountry) AS BillingCountry,
-    TRIM(BillingPostalCode) AS BillingPostalCode,
-    CAST(Total AS DECIMAL(10,2)) AS Total
-FROM d5_raw.raw_invoice;
+CREATE OR REPLACE TABLE workspace.d5_clean.cleaned_track AS
+SELECT DISTINCT
+    CAST(TrackId AS INT) AS TrackId,
+    Name AS TrackName,
+    CAST(AlbumId AS INT) AS AlbumId,
+    CAST(MediaTypeId AS INT) AS MediaTypeId,
+    CAST(GenreId AS INT) AS GenreId,
+    Composer,
+    CAST(Milliseconds AS INT) AS Milliseconds,
+    CAST(UnitPrice AS DECIMAL(10,2)) AS UnitPrice
+FROM workspace.d5_raw.raw_track
+WHERE TrackId IS NOT NULL
+  AND UnitPrice IS NOT NULL;
