@@ -1,0 +1,51 @@
+-- ============================================================
+-- VALIDATION: CLEANED CUSTOMER
+-- Purpose:
+--   Validate row count, CustomerId uniqueness, required
+--   customer attributes, contact information, and
+--   SupportRepId relationship.
+--
+-- Expected Results:
+--   Row_Count = 59
+--   Unique_CustomerId = 59
+--   Null_CustomerId = 0
+--   Null_FirstName = 0
+--   Null_LastName = 0
+--   Null_Company = 59
+--   Null_Address = 0
+--   Null_City = 0
+--   Null_State = 30
+--   Null_Country = 0
+--   Null_PostalCode = 26
+--   Null_Phone = 1
+--   Null_Fax = 47
+--   Null_Email = 0
+--   Null_SupportRepId = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT CustomerId) AS Unique_CustomerId,
+
+    -- Key
+    COUNT_IF(CustomerId IS NULL) AS Null_CustomerId,
+
+    -- Customer information
+    COUNT_IF(FirstName IS NULL OR TRIM(FirstName) = '') AS Null_FirstName,
+    COUNT_IF(LastName IS NULL OR TRIM(LastName) = '') AS Null_LastName,
+    COUNT_IF(Company IS NULL OR TRIM(Company) = '') AS Null_Company,
+    COUNT_IF(Address IS NULL OR TRIM(Address) = '') AS Null_Address,
+    COUNT_IF(City IS NULL OR TRIM(City) = '') AS Null_City,
+    COUNT_IF(State IS NULL OR TRIM(State) = '') AS Null_State,
+    COUNT_IF(Country IS NULL OR TRIM(Country) = '') AS Null_Country,
+    COUNT_IF(PostalCode IS NULL OR TRIM(PostalCode) = '') AS Null_PostalCode,
+
+    -- Contact information
+    COUNT_IF(Phone IS NULL OR TRIM(Phone) = '') AS Null_Phone,
+    COUNT_IF(Fax IS NULL OR TRIM(Fax) = '') AS Null_Fax,
+    COUNT_IF(Email IS NULL OR TRIM(Email) = '') AS Null_Email,
+
+    -- Sales representative
+    COUNT_IF(SupportRepId IS NULL) AS Null_SupportRepId
+
+FROM d5_clean.cleaned_customer;
