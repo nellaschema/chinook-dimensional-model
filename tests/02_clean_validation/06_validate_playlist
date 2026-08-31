@@ -1,0 +1,21 @@
+-- ============================================================
+-- VALIDATION: CLEANED PLAYLIST
+-- Purpose: Validate row count, PlaylistId uniqueness, and
+--          completeness of playlist names.
+--
+-- Expected Results:
+--   Row_Count = 36
+--   Unique_PlaylistId = 18 -- why
+--   Null_PlaylistId = 0
+--   Invalid_Name = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT PlaylistId) AS Unique_PlaylistId,
+    COUNT_IF(PlaylistId IS NULL) AS Null_PlaylistId,
+    COUNT_IF(
+        -- Check for missing or blank playlist names
+        PlaylistName IS NULL OR TRIM(PlaylistName) = ''
+    ) AS Invalid_Name
+FROM d5_clean.cleaned_playlist;
