@@ -1,0 +1,20 @@
+-- ============================================================
+-- VALIDATION: CLEANED GENRE
+-- Purpose: Validate row count, GenreId uniqueness, and
+--          completeness of genre names.
+--
+-- Expected Results:
+--   Row_Count = 25
+--   Unique_GenreId = 25
+--   Null_GenreId = 0
+--   Invalid_Name = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT GenreId) AS Unique_GenreId,
+    COUNT_IF(GenreId IS NULL) AS Null_GenreId,
+    COUNT_IF(
+        GenreName IS NULL OR TRIM(GenreName) = ''
+    ) AS Invalid_Name
+FROM d5_clean.cleaned_genre;
