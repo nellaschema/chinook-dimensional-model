@@ -1,0 +1,51 @@
+-- ============================================================
+-- VALIDATION: CLEANED INVOICE
+-- Purpose:
+--   Validate row count, InvoiceId uniqueness, completeness,
+--   billing information, invoice totals, and invoice dates.
+--
+-- Expected Results:
+--   Row_Count = 412
+--   Unique_InvoiceId = 412
+--   Null_InvoiceId = 0
+--   Null_CustomerId = 0
+--   Null_InvoiceDate = 0
+--   Null_Total = 0
+--   Negative_Total = 0
+--   Null_BillingAddress = 0
+--   Null_BillingCity = 0
+--   Null_BillingState = 209
+--   Null_BillingCountry = 0
+--   Null_BillingPostalCode = 28
+--   Min_InvoiceDate = 2021-01-01
+--   Max_InvoiceDate = 2025-12-22
+--   Min_Total = 0.99
+--   Max_Total = 25.86
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT InvoiceId) AS Unique_InvoiceId,
+
+    -- Required fields
+    COUNT_IF(InvoiceId IS NULL) AS Null_InvoiceId,
+    COUNT_IF(CustomerId IS NULL) AS Null_CustomerId,
+    COUNT_IF(InvoiceDate IS NULL) AS Null_InvoiceDate,
+    COUNT_IF(Total IS NULL) AS Null_Total,
+
+    -- Billing information
+    COUNT_IF(BillingAddress IS NULL) AS Null_BillingAddress,
+    COUNT_IF(BillingCity IS NULL) AS Null_BillingCity,
+    COUNT_IF(BillingState IS NULL) AS Null_BillingState,
+    COUNT_IF(BillingCountry IS NULL) AS Null_BillingCountry,
+    COUNT_IF(BillingPostalCode IS NULL) AS Null_BillingPostalCode,
+
+    -- Validity
+    COUNT_IF(Total < 0) AS Negative_Total,
+
+    -- Range checks
+    MIN(InvoiceDate) AS Min_InvoiceDate,
+    MAX(InvoiceDate) AS Max_InvoiceDate,
+    MIN(Total) AS Min_Total,
+    MAX(Total) AS Max_Total
+FROM d5_clean.cleaned_invoice;
