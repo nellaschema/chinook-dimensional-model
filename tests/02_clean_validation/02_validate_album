@@ -1,0 +1,23 @@
+-- ============================================================
+-- VALIDATION: CLEANED ALBUM
+-- Purpose: Validate row count, AlbumId uniqueness, required
+--          album titles, and ArtistId values.
+--
+-- Expected Results:
+--   Row_Count = 347
+--   Unique_AlbumId = 347
+--   Null_AlbumId = 0
+--   Invalid_Title = 0
+--   Null_ArtistId = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT AlbumId) AS Unique_AlbumId,
+    COUNT_IF(AlbumId IS NULL) AS Null_AlbumId,
+    COUNT_IF(
+        AlbumTitle IS NULL OR TRIM(AlbumTitle) = ''
+    ) AS Invalid_Title,
+    COUNT_IF(ArtistId IS NULL) AS Null_ArtistId
+FROM d5_clean.cleaned_album;
+
