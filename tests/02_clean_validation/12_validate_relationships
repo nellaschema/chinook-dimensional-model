@@ -1,0 +1,106 @@
+-- ============================================================
+-- VALIDATION: REFERENTIAL INTEGRITY
+-- Purpose:
+--   Check for orphan records between related cleaned tables.
+--
+-- Expected Results:
+--   InvoiceLine → Invoice = 0
+--   Invoice → Customer = 0
+--   Customer → Employee = 0
+--   Track → Album = 0
+--   Track → Genre = 2
+--   Track → MediaType = 2
+--   PlaylistTrack → Track = 4
+--   PlaylistTrack → Playlist = 0
+-- ============================================================
+
+-- InvoiceLine → Invoice
+SELECT
+    'InvoiceLine → Invoice' AS Relationship,
+    COUNT(*) AS Orphan_Records
+FROM d5_clean.cleaned_invoice_line il
+LEFT JOIN d5_clean.cleaned_invoice i
+    ON il.InvoiceId = i.InvoiceId
+WHERE i.InvoiceId IS NULL
+
+UNION ALL
+
+-- Invoice → Customer
+SELECT
+    'Invoice → Customer' AS Relationship,
+    COUNT(*) AS Orphan_Records
+FROM d5_clean.cleaned_invoice i
+LEFT JOIN d5_clean.cleaned_customer c
+    ON i.CustomerId = c.CustomerId
+WHERE c.CustomerId IS NULL
+
+UNION ALL
+
+-- Customer → Employee
+SELECT
+    'Customer → Employee' AS Relationship,
+    COUNT(*) AS Orphan_Records
+FROM d5_clean.cleaned_customer c
+LEFT JOIN d5_clean.cleaned_employee e
+    ON c.SupportRepId = e.EmployeeId
+WHERE c.SupportRepId IS NOT NULL
+  AND e.EmployeeId IS NULL
+
+UNION ALL
+
+-- Track → Album
+SELECT
+    'Track → Album' AS Relationship,
+    COUNT(*) AS Orphan_Records
+FROM d5_clean.cleaned_track t
+LEFT JOIN d5_clean.cleaned_album a
+    ON t.AlbumId = a.AlbumId
+WHERE t.AlbumId IS NOT NULL
+  AND a.AlbumId IS NULL
+
+UNION ALL
+
+-- Track → Genre
+SELECT
+    'Track → Genre' AS Relationship,
+    COUNT(*) AS Orphan_Records
+FROM d5_clean.cleaned_track t
+LEFT JOIN d5_clean.cleaned_genre g
+    ON t.GenreId = g.GenreId
+WHERE t.GenreId IS NOT NULL
+  AND g.GenreId IS NULL
+
+UNION ALL
+
+-- Track → MediaType
+SELECT
+    'Track → MediaType' AS Relationship,
+    COUNT(*) AS Orphan_Records
+FROM d5_clean.cleaned_track t
+LEFT JOIN d5_clean.cleaned_mediatype mt
+    ON t.MediaTypeId = mt.MediaTypeId
+WHERE t.MediaTypeId IS NOT NULL
+  AND mt.MediaTypeId IS NULL
+
+UNION ALL
+
+-- Track → PlaylistTrack
+SELECT
+    'PlaylistTrack → Track' AS Relationship,
+    COUNT(*) AS Orphan_Records
+
+FROM d5_clean.cleaned_playlisttrack pt
+LEFT JOIN d5_clean.cleaned_track t
+    ON pt.TrackId = t.TrackId
+WHERE t.TrackId IS NULL
+
+UNION ALL
+
+-- Playlist → PlaylistTrack
+SELECT
+    'PlaylistTrack → Playlist' AS Relationship,
+    COUNT(*) AS Orphan_Records
+FROM d5_clean.cleaned_playlisttrack pt
+LEFT JOIN d5_clean.cleaned_playlist p
+    ON pt.PlaylistId = p.PlaylistId
+WHERE p.PlaylistId IS NULL;
