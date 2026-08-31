@@ -1,0 +1,40 @@
+-- ============================================================
+-- VALIDATION: CLEANED TRACK
+-- Purpose: Validate row count, TrackId uniqueness, completeness
+--          of required fields, foreign keys, and numeric values.
+--
+-- Expected Results:
+--   Row_Count =3,501
+--   Unique_TrackId = 3,501
+--   Null_TrackId = 0
+--   Invalid_Name = 0
+--   Null_AlbumId = 4
+--   Null_MediaTypeId = 2
+--   Null_GenreId = 0
+--   Invalid_Milliseconds = 0
+--   Invalid_UnitPrice = 0
+--   Composer = 978 (Allow Null)
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT TrackId) AS Unique_TrackId,
+    COUNT_IF(TrackId IS NULL) AS Null_TrackId,
+    COUNT_IF(
+        TrackName IS NULL OR TRIM(TrackName) = ''
+    ) AS Invalid_Name,
+    COUNT_IF(AlbumId IS NULL) AS Null_AlbumId,
+    COUNT_IF(MediaTypeId IS NULL) AS Null_MediaTypeId,
+
+    COUNT_IF(GenreId IS NULL) AS Null_GenreId,
+    COUNT_IF(
+        Milliseconds IS NULL OR Milliseconds <= 0
+    ) AS Invalid_Milliseconds,
+    COUNT_IF(
+        UnitPrice IS NULL OR UnitPrice < 0
+    ) AS Invalid_UnitPrice,
+    COUNT_IF(
+        Composer IS NULL OR TRIM(Composer) = ''
+    ) AS Null_or_Blank_Composer
+FROM d5_clean.cleaned_track;
+
