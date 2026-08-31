@@ -1,0 +1,35 @@
+-- ============================================================
+-- VALIDATION: CLEANED INVOICE LINE
+-- Purpose: Validate row count, InvoiceLineId uniqueness,
+--          required foreign keys, Quantity, and UnitPrice.
+--
+-- Expected Results:
+--   Row_Count = 2240
+--   Unique_InvoiceLineId = 2240
+--   Null_InvoiceLineId = 0
+--   Null_InvoiceId = 0
+--   Null_TrackId = 0
+--   Invalid_Quantity = 0
+--   Invalid_UnitPrice = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT InvoiceLineId) AS Unique_InvoiceLineId,
+    COUNT_IF(
+        InvoiceLineId IS NULL
+    ) AS Null_InvoiceLineId,
+
+    COUNT_IF(
+        InvoiceId IS NULL
+    ) AS Null_InvoiceId,
+    COUNT_IF(
+        TrackId IS NULL
+    ) AS Null_TrackId,
+    COUNT_IF(
+        Quantity IS NULL OR Quantity <= 0
+    ) AS Invalid_Quantity,
+    COUNT_IF(
+        UnitPrice IS NULL OR UnitPrice <= 0
+    ) AS Invalid_UnitPrice
+FROM d5_clean.cleaned_invoice_line;
