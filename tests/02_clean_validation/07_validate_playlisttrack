@@ -1,0 +1,20 @@
+-- ============================================================
+-- VALIDATION: CLEANED PLAYLIST TRACK
+-- Purpose: Validate row count, composite key uniqueness,
+--          and completeness of PlaylistId and TrackId.
+--
+-- Expected Results:
+--   Row_Count = 8,715
+--   Unique_Composite_Key = 8,715
+--   Null_PlaylistId = 0
+--   Null_TrackId = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(
+        DISTINCT CONCAT(PlaylistId, '-', TrackId)
+    ) AS Unique_Composite_Key,
+    COUNT_IF(PlaylistId IS NULL) AS Null_PlaylistId,
+    COUNT_IF(TrackId IS NULL) AS Null_TrackId
+FROM d5_clean.cleaned_playlisttrack;
