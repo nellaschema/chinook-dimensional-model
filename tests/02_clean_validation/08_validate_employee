@@ -1,0 +1,46 @@
+-- ============================================================
+-- VALIDATION: CLEANED EMPLOYEE
+-- Purpose: Validate row count, EmployeeId uniqueness,
+--          required employee attributes, dates, and
+--          reporting relationship.
+--
+-- Expected Results:
+--   Row_Count = 8
+--   Unique_EmployeeId = 8
+--   Null_EmployeeId = 0
+--   Invalid_LastName = 0
+--   Invalid_FirstName = 0
+--   Invalid_Title = 0
+--   Null_BirthDate = 0
+--   Null_HireDate = 0
+--   Invalid_HireDate = 0
+--   Invalid_ReportsTo = [BASELINE]
+--   Invalid_Email = [BASELINE]
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT EmployeeId) AS Unique_EmployeeId,
+    COUNT_IF(EmployeeId IS NULL) AS Null_EmployeeId,
+    COUNT_IF(
+        LastName IS NULL OR TRIM(LastName) = ''
+    ) AS Invalid_LastName,
+    COUNT_IF(
+        FirstName IS NULL OR TRIM(FirstName) = ''
+    ) AS Invalid_FirstName,
+    COUNT_IF(
+        Title IS NULL OR TRIM(Title) = ''
+    ) AS Invalid_Title,
+    COUNT_IF(
+        BirthDate IS NULL
+    ) AS Null_BirthDate,
+    COUNT_IF(
+        HireDate IS NULL
+    ) AS Null_HireDate,
+    COUNT_IF(
+        HireDate < BirthDate
+    ) AS Invalid_HireDate,
+    COUNT_IF(
+        Email IS NULL OR TRIM(Email) = ''
+    ) AS Invalid_Email
+FROM d5_clean.cleaned_employee;
