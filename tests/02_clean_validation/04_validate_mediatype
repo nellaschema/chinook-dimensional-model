@@ -1,0 +1,20 @@
+-- ============================================================
+-- VALIDATION: CLEANED MEDIA TYPE
+-- Purpose: Validate row count, MediaTypeId uniqueness, and
+--          completeness of media type names.
+--
+-- Expected Results:
+--   Row_Count = 5
+--   Unique_MediaTypeId = 5
+--   Null_MediaTypeId = 0
+--   Invalid_Name = 0
+-- ============================================================
+
+SELECT
+    COUNT(*) AS Row_Count,
+    COUNT(DISTINCT MediaTypeId) AS Unique_MediaTypeId,
+    COUNT_IF(MediaTypeId IS NULL) AS Null_MediaTypeId,
+    COUNT_IF(
+        Name IS NULL OR TRIM(Name) = ''
+    ) AS Invalid_Name
+FROM d5_clean.cleaned_mediatype;
